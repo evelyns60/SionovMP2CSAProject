@@ -41,12 +41,10 @@ public class Banker {
 
     public void addChips(int newAmount) {
         chipAmount += newAmount;
-        //remove from banker
     }
 
     public void removeChips(int newAmount) {
         chipAmount -= newAmount;
-        //add to banker
     }
 
     public int getChipAmount() {
