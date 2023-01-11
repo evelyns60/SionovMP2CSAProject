@@ -8,6 +8,7 @@ public class Player {
     private int die1result;
     private int die2result;
     private int die3result;
+    private boolean stillInGame;
 
     public Player(String name) {
         this.name = name;
@@ -15,6 +16,7 @@ public class Player {
         die1 = new Die();
         die2 = new Die();
         die3 = new Die();
+        stillInGame = true;
     }
 
     public void rollDice() {
