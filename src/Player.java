@@ -9,6 +9,8 @@ public class Player {
     private int die2result;
     private int die3result;
     private boolean stillInGame;
+    private int playerStatus;
+    private int score;
 
     public Player(String name) {
         this.name = name;
@@ -20,6 +22,7 @@ public class Player {
     }
 
     public void rollDice() {
+        score = 0;
         boolean rollAgain = true;
 
         while (rollAgain) {
@@ -30,13 +33,22 @@ public class Player {
             die3.roll();
             die3result = die3.getCurrentResult();
             if ((die1result == die2result && die1result == die3result) || is456()) {
-                addChips(chipWager);
+                chipAmount += chipWager;
+                playerStatus = 1; //they won
                 rollAgain = false;
             } else if (die1result == die2result || die2result == die3result || die1result == die3result) {
-                //make banker class first
+                if (die1result == die2result) {
+                    score = die3result;
+                } else if (die1result == die3result) {
+                    score = die2result;
+                } else {
+                    score = die1result;
+                }
+                playerStatus = 2; //they got a score
                 rollAgain = false;
             } else if (is123()) {
-                removeChips(chipWager);
+                chipAmount -= chipWager;
+                playerStatus = 3; //they lost
                 rollAgain = false;
             } else {
                 System.out.println("Invalid roll. Roll again.");
@@ -46,12 +58,10 @@ public class Player {
 
     public void addChips(int newAmount) {
         chipAmount += newAmount;
-        //remove from banker
     }
 
     public void removeChips(int newAmount) {
         chipAmount -= newAmount;
-        //add to banker
     }
 
     public void setWager(int newWager) {
@@ -70,6 +80,13 @@ public class Player {
         return chipWager;
     }
 
+    public int getPlayerStatus() {
+        return playerStatus;
+    }
+
+    public int getScore() {
+        return score;
+    }
     private boolean is456() {
         if (die1result == 4) {
             if (die2result == 5) {
